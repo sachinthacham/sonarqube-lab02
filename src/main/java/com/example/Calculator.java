@@ -2,48 +2,26 @@ package main.java.com.example;
 
 public class Calculator {
 
-    // Code Smell: Long method + high complexity
-    public int calculate(int a, int b, String op) { 
- 
-        if(op.equals("add")) { 
-            return a + b; 
-        } else if(op.equals("add-again")) { 
-            return a + b; // DUPLICATION 
-        } else if(op.equals("sub")) { 
-            return a - b; 
-        } else if(op.equals("sub-again")) { 
-            return a - b; // DUPLICATION 
-        } else if(op.equals("mul")) { 
-            return a * b; 
-        } else if(op.equals("div")) { 
-            if(b == 0) { 
-                return 0; 
-            } else { 
-                return a / b; 
-            } 
-        } else if(op.equals("mod")) { 
-            return a % b; 
-        } else if(op.equals("pow")) { 
-            int result = 1; 
-            for(int i = 0; i < b; i++) { 
-                result = result * a; 
-            } 
-            return result; 
-        } else { 
-            return 0; 
-        } 
-    } 
+    public int calculate(int a, int b, String op) {
+        // Switch expression (Java 14+) - cleaner and less error-prone
+        return switch (op.toLowerCase()) {
+            case "add" -> a + b;
+            case "sub" -> a - b;
+            case "mul" -> a * b;
+            case "div" -> {
+                if (b == 0) {
+                    throw new ArithmeticException("Cannot divide by zero");
+                }
+                yield a / b;
+            }
+            case "mod" -> a % b;
+            case "pow" -> (int) Math.pow(a, b);
+            default -> throw new IllegalArgumentException("Unknown operation: " + op);
+        };
+    }
 
-    // Code Duplication (students must remove)
+    // Kept one utility method if needed, but removed the intentional duplicates
     public int addNumbers(int x, int y) {
         return x + y;
-    }
-    // INTENTIONAL DUPLICATION 
-public int addAgain(int a, int b) { 
-return a + b; 
-} 
-
-    public int sumValues(int a, int b) {
-        return a + b;
     }
 }
