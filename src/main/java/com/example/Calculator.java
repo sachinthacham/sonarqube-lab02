@@ -2,26 +2,35 @@ package main.java.com.example;
 
 public class Calculator {
 
-    public int calculate(int a, int b, String op) {
-        // Switch expression (Java 14+) - cleaner and less error-prone
-        return switch (op.toLowerCase()) {
-            case "add" -> a + b;
-            case "sub" -> a - b;
-            case "mul" -> a * b;
-            case "div" -> {
-                if (b == 0) {
-                    throw new ArithmeticException("Cannot divide by zero");
-                }
-                yield a / b;
-            }
-            case "mod" -> a % b;
-            case "pow" -> (int) Math.pow(a, b);
-            default -> throw new IllegalArgumentException("Unknown operation: " + op);
-        };
-    }
+    private static final String OP_ADD = "add";
+    private static final String OP_ADD_AGAIN = "add-again";
+    private static final String OP_SUB = "sub";
+    private static final String OP_SUB_AGAIN = "sub-again";
+    private static final String OP_MUL = "mul";
+    private static final String OP_DIV = "div";
+    private static final String OP_MOD = "mod";
+    private static final String OP_POW = "pow";
 
-    // Kept one utility method if needed, but removed the intentional duplicates
-    public int addNumbers(int x, int y) {
-        return x + y;
+    public int calculate(int a, int b, String op) {
+        if (op == null) {
+            return 0;
+        }
+
+        switch (op) {
+            case OP_ADD, OP_ADD_AGAIN:
+                return a + b;
+            case OP_SUB, OP_SUB_AGAIN:
+                return a - b;
+            case OP_MUL:
+                return a * b;
+            case OP_DIV:
+                return (b == 0) ? 0 : a / b;
+            case OP_MOD:
+                return a % b;
+            case OP_POW:
+                return (int) Math.pow(a, b);
+            default:
+                return 0;
+        }
     }
 }
