@@ -34,6 +34,10 @@ public class Calculator {
         } 
     } 
 
+    // Code Duplication (students must remove)
+    public int addNumbers(int x, int y) {
+        return x + y;
+    }
     // INTENTIONAL DUPLICATION 
 public int addAgain(int a, int b) { 
 return a + b; 
